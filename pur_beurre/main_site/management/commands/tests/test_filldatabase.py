@@ -1,3 +1,4 @@
+# pylint: skip-file
 from django.test import TransactionTestCase
 from unittest.mock import patch, MagicMock, Mock
 from json import dumps
@@ -6,8 +7,8 @@ from ..filldatabase import Command
 from .._product_maker import ApiProduct
 from main_site.models import Product, Category
 
-class TestCommand(TransactionTestCase):
 
+class TestCommand(TransactionTestCase):
     def setUp(self):
 
         self.command = Command()
@@ -32,7 +33,7 @@ class TestCommand(TransactionTestCase):
     def test_fill_categories_alright(self):
         product = ApiProduct
         product.categories = Mock(return_value=["fruit"])
-        
+
         self.command.fill_categories([product])
 
         self.assertEqual(list(Category.objects.all()), [self.category1])
@@ -41,7 +42,7 @@ class TestCommand(TransactionTestCase):
         product = ApiProduct
         self.category1.save()
         product.categories = Mock(return_value=["fruit"])
-        
+
         self.command.fill_categories([product])
 
         self.assertEqual(list(Category.objects.all()), [self.category1])
@@ -93,10 +94,9 @@ class TestCommand(TransactionTestCase):
 
         self.assertEqual(list(self.category1.products.all()), [self.product1])
 
-
     # @patch('requests.get')
     # def test_products_list_creator(self, mock_get):
-                
+
     #     test_json_product = dumps({"products":
     #         [
     #             {
@@ -115,9 +115,8 @@ class TestCommand(TransactionTestCase):
     #     mock_get.return_value = resp
 
     #     ApiProduct = MagicMock(return_value="product")
-        
+
     #     self.command.product_data_validity = MagicMock(return_value=True)
-        
+
     #     response = self.command.products_list_creator(None,None)
     #     assert [["product"],["product"]] == [response]
-

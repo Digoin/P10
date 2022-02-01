@@ -8,6 +8,7 @@ django = "*"
 psycopg2 = "*"
 requests = "*"
 dj-database-url = "*"
+pylint-django = "*"
 
 [dev-packages]
 coverage = "*"
@@ -15,6 +16,8 @@ webdriver-manager = "*"
 pytest-cov = "*"
 pytest = "*"
 pytest-django = "*"
+pylint = "*"
+black = "*"
 
 [requires]
 python_version = "3.8"

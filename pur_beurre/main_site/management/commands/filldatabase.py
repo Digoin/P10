@@ -5,16 +5,22 @@ from django.db import IntegrityError
 from main_site.models import Category, Product
 from ._product_maker import ApiProduct
 
+
 class Command(BaseCommand):
-    help = 'Fill the database with the specified categories and linked products'
+    help = "Fill the database with the specified categories and linked products"
 
     def add_arguments(self, parser):
-        parser.add_argument('category_name', nargs='+', type=str)
-        parser.add_argument('number_of_pages', nargs='+', type=int)
+        parser.add_argument("category_name", nargs="+", type=str)
+        parser.add_argument("number_of_pages", nargs="+", type=int)
 
     def products_list_creator(self, category, number_of_pages):
+        """Call the class ApiProduct and build the product from the open food facts app"""
         products_list = []
-        api_request = dict(requests.get(f"https://fr-en.openfoodfacts.org/category/{category}/{number_of_pages}.json").json())
+        api_request = dict(
+            requests.get(
+                f"https://fr-en.openfoodfacts.org/category/{category}/{number_of_pages}.json"
+            ).json()
+        )
         for json_product in api_request["products"]:
             product = ApiProduct(json_product)
             if self.product_data_validity(product):
@@ -22,6 +28,7 @@ class Command(BaseCommand):
         return products_list
 
     def product_data_validity(self, product):
+        """Check that the attributes of the product are all valid"""
         return (
             product.name() is None
             or product.categories() is None
@@ -37,6 +44,7 @@ class Command(BaseCommand):
         )
 
     def fill_categories(self, products):
+        """Add the categories of the products list to the database."""
         for product in products:
             for category in product.categories():
                 new_category = Category(name=category)
@@ -46,6 +54,7 @@ class Command(BaseCommand):
                     self.stdout.write("Category already exist.")
 
     def fill_products(self, products):
+        """Add the products of the list to the database."""
         for product in products:
             new_product = Product(
                 name=product.name(),
@@ -55,24 +64,25 @@ class Command(BaseCommand):
                 kcal=product.kcal(),
                 fat=product.fat(),
                 protein=product.protein(),
-                sugar=product.sugar()
+                sugar=product.sugar(),
             )
             try:
                 new_product.save()
                 self.link_product_categories(product)
             except IntegrityError:
                 self.stdout.write("Product already exist or his name is already used.")
-    
+
     def link_product_categories(self, product):
-            for category in product.categories():
-                category_instance = Category.objects.filter(name=category)[0]
-                product_instance = Product.objects.filter(name=product.name())[0]
-                category_instance.products.add(product_instance)
-                category_instance.save()
+        """This function link the products to their categories."""
+        for category in product.categories():
+            category_instance = Category.objects.filter(name=category)[0]
+            product_instance = Product.objects.filter(name=product.name())[0]
+            category_instance.products.add(product_instance)
+            category_instance.save()
 
     def handle(self, *args, **options):
-        for pages in range(1, options['number_of_pages'][0]):
-            products_list = self.products_list_creator(options['category_name'], pages)
+        for pages in range(1, options["number_of_pages"][0]):
+            products_list = self.products_list_creator(options["category_name"], pages)
             self.fill_categories(products_list)
             self.fill_products(products_list)
 
