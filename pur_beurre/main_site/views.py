@@ -51,10 +51,7 @@ def product_description(request, product_id):
     for categories in product.category_set.all():
         for linked_product in categories.products.all():
             if (
-                string.ascii_uppercase.index(linked_product.nutriscore)
-                <= string.ascii_uppercase.index(product.nutriscore)
-                and linked_product not in substitute_products
-                and linked_product != product
+                string.ascii_uppercase.index(linked_product.nutriscore) <= string.ascii_uppercase.index(product.nutriscore) and linked_product not in substitute_products and linked_product != product
             ):
                 substitute_products.append(linked_product)
 
@@ -64,8 +61,7 @@ def product_description(request, product_id):
             if len(best_subsitute_products) >= 6:
                 break
             if (
-                string.ascii_uppercase.index(best_product.nutriscore)
-                == nutriscore_count
+                string.ascii_uppercase.index(best_product.nutriscore) == nutriscore_count
             ):
                 best_subsitute_products.append(best_product)
         nutriscore_count += 1

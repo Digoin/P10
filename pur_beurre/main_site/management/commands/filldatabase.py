@@ -30,17 +30,7 @@ class Command(BaseCommand):
     def product_data_validity(self, product):
         """Check that the attributes of the product are all valid"""
         return (
-            product.name() is None
-            or product.categories() is None
-            or product.nutriscore() is None
-            or product.url() is None
-            or product.categories_language() is None
-            or product.categories_language() != "fr"
-            or product.image_url() is None
-            or product.kcal() is None
-            or product.fat() is None
-            or product.protein() is None
-            or product.sugar() is None
+            product.name() is None or product.categories() is None or product.nutriscore() is None or product.url() is None or product.categories_language() is None or product.categories_language() != "fr" or product.image_url() is None or product.kcal() is None or product.fat() is None or product.protein() is None or product.sugar() is None
         )
 
     def fill_categories(self, products):
