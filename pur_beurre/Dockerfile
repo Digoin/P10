@@ -1,33 +1,29 @@
 # pull official base image
-FROM python:3.8-alpine
+FROM python:3.9.6-alpine
 
 # set work directory
-WORKDIR /pur_beurre
+WORKDIR /Documents/OC/p10/code/pur_beurre
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV DEBUG 0
 
-# install psycopg2
+# install psycopg2 dependencies
 RUN apk update \
-    && apk add --virtual build-essential gcc python3-dev musl-dev \
-    && apk add postgresql-dev \
-    && pip install psycopg2
+    && apk add postgresql-dev gcc python3-dev musl-dev
 
 # install dependencies
+RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
+
+# copy entrypoint.sh
+COPY ./entrypoint.sh .
+RUN sed -i 's/\r$//g' ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
 
 # copy project
 COPY . .
 
-# collect static files
-RUN python manage.py collectstatic --noinput
-
-# add and run as non-root user
-RUN adduser -D myuser
-USER myuser
-
-# run gunicorn
-CMD gunicorn pur_beurre.wsgi:application --bind 0.0.0.0:$PORT
+# run entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
