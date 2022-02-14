@@ -5,7 +5,9 @@ python:
 services:
   - docker
 
-before_script: pip install docker-compose
+before_script:
+  - cp .env .env
+  - pip install docker-compose
 
 script:
   - docker-compose run web "python manage.py test"
