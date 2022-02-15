@@ -28,6 +28,10 @@ services:
       - 1337:80
     depends_on:
       - web
+  cron:
+    build:
+      context: ./pur_beurre
+      dockerfile: Dockerfile.cron
 
 volumes:
   postgres_data:

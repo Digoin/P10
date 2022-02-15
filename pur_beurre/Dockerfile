@@ -48,6 +48,8 @@ RUN mkdir $APP_HOME/staticfiles
 WORKDIR $APP_HOME
 
 # install dependencies
+RUN apk add --no-cache tree
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
 RUN apk update && apk add libpq
 COPY --from=builder /usr/src/pur_beurre/wheels /wheels
 # COPY --from=builder /usr/src/pur_beurre/requirements.txt .
