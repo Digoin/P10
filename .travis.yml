@@ -6,7 +6,7 @@ services:
   - docker
 
 before_script:
-  - chmod +x entrypoint.sh
+  - chmod +x pur_beurre/entrypoint.sh
   - touch .env
   - touch .env.db
   - pip install docker-compose
@@ -14,7 +14,7 @@ before_script:
 script:
   - DEBUG=1
   - P8_DJANGO_KEY=change_me
-  - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+  - DJANGO_ALLOWED_HOSTS="localhost 127.0.0.1 [::1]"
   - SQL_ENGINE=django.db.backends.postgresql
   - SQL_DATABASE=hello_django
   - SQL_USER=hello_django
