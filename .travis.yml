@@ -6,8 +6,8 @@ services:
   - docker
 
 before_script:
-  - cp .env .env
-  - cp .env.db .env.db
+  - touch .env
+  - touch .env.db
   - pip install docker-compose
 
 script:
