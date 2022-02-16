@@ -6,6 +6,7 @@ services:
   - docker
 
 before_script:
+  - chmod +x entrypoint.sh
   - touch .env
   - touch .env.db
   - pip install docker-compose
