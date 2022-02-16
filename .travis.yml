@@ -25,4 +25,4 @@ script:
   - POSTGRES_USER=hello_django
   - POSTGRES_PASSWORD=hello_django
   - POSTGRES_DB=hello_django
-  - docker-compose run web "python manage.py test"
+  - docker-compose run web "python pur_beurre/manage.py test"
