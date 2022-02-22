@@ -7,18 +7,18 @@ on: push
 
 
 jobs:
-  env:
-    DEBUG:  0
-    P8_DJANGO_KEY:  foo
-    DJANGO_ALLOWED_HOSTS:  localhost
-    SQL_ENGINE:  django.db.backends.postgresql
-    SQL_DATABASE:  hello_django
-    SQL_USER:  hello_django
-    SQL_PASSWORD:  hello_django
-    SQL_HOST:  db
-    SQL_PORT:  5432
-    DATABASE:  postgres
   health-check-job: # health check job for testing and code formatting check
+    env:
+      DEBUG: 0
+      P8_DJANGO_KEY: foo
+      DJANGO_ALLOWED_HOSTS: localhost
+      SQL_ENGINE: django.db.backends.postgresql
+      SQL_DATABASE: hello_django
+      SQL_USER: hello_django
+      SQL_PASSWORD: hello_django
+      SQL_HOST: db
+      SQL_PORT: 5432
+      DATABASE: postgres
     runs-on: ubuntu-latest # os for running the job
     services:
       postgres: # we need a postgres docker image to be booted a side car service to run the tests that needs a db
