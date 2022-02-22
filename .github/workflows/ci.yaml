@@ -45,3 +45,5 @@ jobs:
           DJANGO_ALLOWED_HOSTS: localhost
       - name: Run Test # running tests
         run: python pur_beurre/manage.py test
+        env:
+          DJANGO_ALLOWED_HOSTS: localhost
