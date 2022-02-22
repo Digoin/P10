@@ -8,6 +8,7 @@ on: push
 
 jobs:
   health-check-job: # health check job for testing and code formatting check
+    runs-on: ubuntu-latest # os for running the job
     env:
       DEBUG: 0
       P8_DJANGO_KEY: foo
@@ -19,7 +20,6 @@ jobs:
       SQL_HOST: db
       SQL_PORT: 5432
       DATABASE: postgres
-    runs-on: ubuntu-latest # os for running the job
     services:
       postgres: # we need a postgres docker image to be booted a side car service to run the tests that needs a db
         image: postgres
