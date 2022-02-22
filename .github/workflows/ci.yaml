@@ -6,8 +6,18 @@ name: Django CI/CD Workflow
 on: push
 
 
-# three job definition
 jobs:
+  env:
+    DEBUG:  0
+    P8_DJANGO_KEY:  foo
+    DJANGO_ALLOWED_HOSTS:  localhost
+    SQL_ENGINE:  django.db.backends.postgresql
+    SQL_DATABASE:  hello_django
+    SQL_USER:  hello_django
+    SQL_PASSWORD:  hello_django
+    SQL_HOST:  db
+    SQL_PORT:  5432
+    DATABASE:  postgres
   health-check-job: # health check job for testing and code formatting check
     runs-on: ubuntu-latest # os for running the job
     services:
@@ -41,9 +51,5 @@ jobs:
         run: pip install -r pur_beurre/requirements.txt
       - name: Run Migrations # run migrations to create table in side car db container
         run: python pur_beurre/manage.py migrate
-        env:
-          DJANGO_ALLOWED_HOSTS: localhost
       - name: Run Test # running tests
         run: python pur_beurre/manage.py test
-        env:
-          DJANGO_ALLOWED_HOSTS: localhost
