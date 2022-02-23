@@ -38,6 +38,8 @@ jobs:
         run: python --version
       - name: Install requirements # install application requirements
         run: pip install -r pur_beurre/requirements.txt
+      - name: Install webdriver-manager
+        run: pip install webdriver-manager
       - name: Run Migrations # run migrations to create table in side car db container
         run: python pur_beurre/manage.py migrate
       - name: Run Test # running tests
