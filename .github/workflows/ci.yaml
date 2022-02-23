@@ -41,4 +41,4 @@ jobs:
       - name: Run Migrations # run migrations to create table in side car db container
         run: python pur_beurre/manage.py migrate
       - name: Run Test # running tests
-        run: python pur_beurre/manage.py test main_site/tests/test_views
+        run: python pur_beurre/manage.py test pur_beurre/main_site/tests/test_views
