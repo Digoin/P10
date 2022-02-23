@@ -1,1 +1,1 @@
-from .test_views import TestViews
+from .views.test_views import TestViews
